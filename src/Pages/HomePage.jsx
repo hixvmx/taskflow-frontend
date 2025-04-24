@@ -1,10 +1,11 @@
+import Header from "../components/Header";
 
 export default function HomePage() {
     return (
-        <div className="">
-            <h1 className="text-3xl underline">
-                Hello world
-            </h1>
+
+        <div className="min-h-screen bg-gray-100">
+            {/* Header */}
+            <Header />
         </div>
     )
 }
