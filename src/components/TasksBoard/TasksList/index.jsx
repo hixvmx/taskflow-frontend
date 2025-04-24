@@ -1,44 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Category from "./Category";
-import axiosClient from "../../../lib/axiosClient";
+import AddNewCategory from "../../Pages/Categories/AddNewCategory";
 
 
-export default function TasksList() {
+export default function TasksList({ categories }) {
 
-    const [categories, setCategories] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-
-    const getAllCategories = async () => {
-        try {
-            setIsLoading(true)
-
-
-            const response = await axiosClient.get('/api/categories');
-            setCategories(response.data ?? []);
-
-        } catch (err) {
-            console.log("Error:", err);
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        getAllCategories();
-    }, [])
+    const [isAddNewOpen, setIsAddNewOpen] = useState(false)
+    const toggle = () => setIsAddNewOpen(!isAddNewOpen);
+    
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-            {isLoading ? suspense() :
+            {categories?.loading ? suspense() :
                 <div className="w-full flex items-start space-x-4 overflow-x-auto pb-4">
-                    {categories?.map(c => <Category key={c.slug} name={c.name} slug={c.slug} tasks={c.tasks} />)}
+                    {categories?.value?.map(c => <Category key={c.slug} name={c.name} slug={c.slug} tasks={c.tasks} />)}
                     <div className="group w-72 max-w-72 min-w-72">
-                        <button className="w-full text-left bg-gray-300 hover:bg-gray-400 rounded shadow-sm hover:shadow cursor-pointer p-3">
+                        <button
+                            onClick={toggle}
+                            className="w-full text-left bg-gray-300 hover:bg-gray-400 rounded shadow-sm hover:shadow cursor-pointer p-3">
                             <div className="text-sm font-medium text-gray-900">Add New Category</div>
                         </button>
                     </div>
                 </div>
             }
+
+            {isAddNewOpen && (
+                <AddNewCategory
+                    close={toggle}
+                />
+            )}
         </div>
     )
 }
