@@ -5,7 +5,7 @@ import PrimaryButton from "../../Shared/PrimaryButton";
 import axiosClient from "../../../lib/axiosClient";
 
 
-export default function AddNewTask({ categorySlug, close }) {
+export default function AddNewTask({ categorySlug, close, refresh }) {
 
     const [title, setTitle] = useState("")
     const [desc, setDesc] = useState("")
@@ -25,6 +25,8 @@ export default function AddNewTask({ categorySlug, close }) {
                 desc,
             });
 
+            refresh();
+            
             close();
 
         } catch (err) {

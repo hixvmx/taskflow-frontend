@@ -5,7 +5,7 @@ import PrimaryButton from "../../Shared/PrimaryButton";
 import axiosClient from "../../../lib/axiosClient";
 
 
-export default function AddNewCategory({ close }) {
+export default function AddNewCategory({ close, refresh }) {
 
     const [categoryName, setCategoryName] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -20,6 +20,8 @@ export default function AddNewCategory({ close }) {
 
             await axiosClient.post('/api/categories', { name: categoryName });
 
+            refresh();
+            
             close();
 
         } catch (err) {
