@@ -5,25 +5,20 @@ import PrimaryButton from "../../Shared/PrimaryButton";
 import axiosClient from "../../../lib/axiosClient";
 
 
-export default function AddNewTask({ categorySlug, close }) {
+export default function AddNewCategory({ close }) {
 
-    const [title, setTitle] = useState("")
-    const [desc, setDesc] = useState("")
+    const [categoryName, setCategoryName] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     const handleClick = async () => {
-        if (!title) return;
+        if (!categoryName) return;
 
 
         try {
             setIsLoading(true)
 
 
-            await axiosClient.post('/api/tasks', {
-                category: categorySlug,
-                title,
-                desc,
-            });
+            await axiosClient.post('/api/categories', { name: categoryName });
 
             close();
 
@@ -42,7 +37,7 @@ export default function AddNewTask({ categorySlug, close }) {
             <div className="max-md:px-2">
                 <div className="rounded-lg shadow-lg bg-white w-full max-h-[60dvh] overflow-y-auto">
                     <div className="bg-white h-[65px] flex items-center justify-between px-4 lg:px-6 border-b shadow-sm">
-                        <h2 className="text-xl font-semibold">Add New Task</h2>
+                        <h2 className="text-xl font-semibold">Add New Category</h2>
                         <button
                             onClick={close}
                             className="flex shrink-0 justify-center items-center bg-transparent hover:bg-primary/5 rounded-lg text-secondary/80 cursor-pointer outline-none transition-all duration-300 ease-in-out">
@@ -54,22 +49,15 @@ export default function AddNewTask({ categorySlug, close }) {
                         <input
                             type="text"
                             className="w-full py-3 lg:px-6 px-4 rounded-md text-md font-semibold border outline-none lg:mb-6 mb-4"
-                            placeholder="Title..."
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <textarea
-                            type="text"
-                            className="w-full py-3 lg:px-6 px-4 rounded-md text-md font-semibold border outline-none lg:mb-6 mb-4 resize-y min-h-32"
-                            placeholder="Description..."
-                            value={desc}
-                            onChange={(e) => setDesc(e.target.value)}
+                            placeholder="Category Name..."
+                            value={categoryName}
+                            onChange={(e) => setCategoryName(e.target.value)}
                         />
                         <PrimaryButton
                             type="text"
                             name="Save Changes"
                             onClick={handleClick}
-                            disabled={isLoading || !title}
+                            disabled={isLoading || !categoryName}
                             isLoading={isLoading}
                         />
                     </div>
