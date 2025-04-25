@@ -51,6 +51,13 @@ Once running, open your browser and go to:
 http://localhost:9000
 ```
 
+## ⚠️ Important
+
+Make sure the **Laravel backend is running** before using the frontend.  
+You can start it by following the steps in the backend README and running:
+
+[https://github.com/hixvmx/taskflow-backend#readme](https://github.com/hixvmx/taskflow-backend#readme)
+
 ---
 
 ### 🚀 Built by **https://www.hixvm.com**
